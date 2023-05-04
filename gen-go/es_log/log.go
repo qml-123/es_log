@@ -35,6 +35,9 @@ var _ = base.GoUnusedProtection__
 //  - EndTime
 //  - LogLevels
 //  - KeyWords
+//  - KeyWordsOr
+//  - FilterWords
+//  - FilterWordsOr
 //  - BaseData
 type SearchRequest struct {
   AcsSort *bool `thrift:"acs_sort,1" db:"acs_sort" json:"acs_sort,omitempty"`
@@ -44,7 +47,10 @@ type SearchRequest struct {
   EndTime *string `thrift:"end_time,5" db:"end_time" json:"end_time,omitempty"`
   LogLevels []string `thrift:"log_levels,6" db:"log_levels" json:"log_levels,omitempty"`
   KeyWords []string `thrift:"key_words,7" db:"key_words" json:"key_words,omitempty"`
-  // unused fields # 8 to 254
+  KeyWordsOr *bool `thrift:"key_words_or,8" db:"key_words_or" json:"key_words_or,omitempty"`
+  FilterWords []string `thrift:"filter_words,9" db:"filter_words" json:"filter_words,omitempty"`
+  FilterWordsOr *bool `thrift:"filter_words_or,10" db:"filter_words_or" json:"filter_words_or,omitempty"`
+  // unused fields # 11 to 254
   BaseData *base.BaseData `thrift:"baseData,255,required" db:"baseData" json:"baseData"`
 }
 
@@ -97,6 +103,25 @@ var SearchRequest_KeyWords_DEFAULT []string
 func (p *SearchRequest) GetKeyWords() []string {
   return p.KeyWords
 }
+var SearchRequest_KeyWordsOr_DEFAULT bool
+func (p *SearchRequest) GetKeyWordsOr() bool {
+  if !p.IsSetKeyWordsOr() {
+    return SearchRequest_KeyWordsOr_DEFAULT
+  }
+return *p.KeyWordsOr
+}
+var SearchRequest_FilterWords_DEFAULT []string
+
+func (p *SearchRequest) GetFilterWords() []string {
+  return p.FilterWords
+}
+var SearchRequest_FilterWordsOr_DEFAULT bool
+func (p *SearchRequest) GetFilterWordsOr() bool {
+  if !p.IsSetFilterWordsOr() {
+    return SearchRequest_FilterWordsOr_DEFAULT
+  }
+return *p.FilterWordsOr
+}
 var SearchRequest_BaseData_DEFAULT *base.BaseData
 func (p *SearchRequest) GetBaseData() *base.BaseData {
   if !p.IsSetBaseData() {
@@ -130,6 +155,18 @@ func (p *SearchRequest) IsSetLogLevels() bool {
 
 func (p *SearchRequest) IsSetKeyWords() bool {
   return p.KeyWords != nil
+}
+
+func (p *SearchRequest) IsSetKeyWordsOr() bool {
+  return p.KeyWordsOr != nil
+}
+
+func (p *SearchRequest) IsSetFilterWords() bool {
+  return p.FilterWords != nil
+}
+
+func (p *SearchRequest) IsSetFilterWordsOr() bool {
+  return p.FilterWordsOr != nil
 }
 
 func (p *SearchRequest) IsSetBaseData() bool {
@@ -213,6 +250,36 @@ func (p *SearchRequest) Read(ctx context.Context, iprot thrift.TProtocol) error 
     case 7:
       if fieldTypeId == thrift.LIST {
         if err := p.ReadField7(ctx, iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(ctx, fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 8:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField8(ctx, iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(ctx, fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 9:
+      if fieldTypeId == thrift.LIST {
+        if err := p.ReadField9(ctx, iprot); err != nil {
+          return err
+        }
+      } else {
+        if err := iprot.Skip(ctx, fieldTypeId); err != nil {
+          return err
+        }
+      }
+    case 10:
+      if fieldTypeId == thrift.BOOL {
+        if err := p.ReadField10(ctx, iprot); err != nil {
           return err
         }
       } else {
@@ -338,6 +405,46 @@ var _elem1 string
   return nil
 }
 
+func (p *SearchRequest)  ReadField8(ctx context.Context, iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(ctx); err != nil {
+  return thrift.PrependError("error reading field 8: ", err)
+} else {
+  p.KeyWordsOr = &v
+}
+  return nil
+}
+
+func (p *SearchRequest)  ReadField9(ctx context.Context, iprot thrift.TProtocol) error {
+  _, size, err := iprot.ReadListBegin(ctx)
+  if err != nil {
+    return thrift.PrependError("error reading list begin: ", err)
+  }
+  tSlice := make([]string, 0, size)
+  p.FilterWords =  tSlice
+  for i := 0; i < size; i ++ {
+var _elem2 string
+    if v, err := iprot.ReadString(ctx); err != nil {
+    return thrift.PrependError("error reading field 0: ", err)
+} else {
+    _elem2 = v
+}
+    p.FilterWords = append(p.FilterWords, _elem2)
+  }
+  if err := iprot.ReadListEnd(ctx); err != nil {
+    return thrift.PrependError("error reading list end: ", err)
+  }
+  return nil
+}
+
+func (p *SearchRequest)  ReadField10(ctx context.Context, iprot thrift.TProtocol) error {
+  if v, err := iprot.ReadBool(ctx); err != nil {
+  return thrift.PrependError("error reading field 10: ", err)
+} else {
+  p.FilterWordsOr = &v
+}
+  return nil
+}
+
 func (p *SearchRequest)  ReadField255(ctx context.Context, iprot thrift.TProtocol) error {
   p.BaseData = &base.BaseData{}
   if err := p.BaseData.Read(ctx, iprot); err != nil {
@@ -357,6 +464,9 @@ func (p *SearchRequest) Write(ctx context.Context, oprot thrift.TProtocol) error
     if err := p.writeField5(ctx, oprot); err != nil { return err }
     if err := p.writeField6(ctx, oprot); err != nil { return err }
     if err := p.writeField7(ctx, oprot); err != nil { return err }
+    if err := p.writeField8(ctx, oprot); err != nil { return err }
+    if err := p.writeField9(ctx, oprot); err != nil { return err }
+    if err := p.writeField10(ctx, oprot); err != nil { return err }
     if err := p.writeField255(ctx, oprot); err != nil { return err }
   }
   if err := oprot.WriteFieldStop(ctx); err != nil {
@@ -466,6 +576,50 @@ func (p *SearchRequest) writeField7(ctx context.Context, oprot thrift.TProtocol)
   return err
 }
 
+func (p *SearchRequest) writeField8(ctx context.Context, oprot thrift.TProtocol) (err error) {
+  if p.IsSetKeyWordsOr() {
+    if err := oprot.WriteFieldBegin(ctx, "key_words_or", thrift.BOOL, 8); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 8:key_words_or: ", p), err) }
+    if err := oprot.WriteBool(ctx, bool(*p.KeyWordsOr)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.key_words_or (8) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(ctx); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 8:key_words_or: ", p), err) }
+  }
+  return err
+}
+
+func (p *SearchRequest) writeField9(ctx context.Context, oprot thrift.TProtocol) (err error) {
+  if p.IsSetFilterWords() {
+    if err := oprot.WriteFieldBegin(ctx, "filter_words", thrift.LIST, 9); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 9:filter_words: ", p), err) }
+    if err := oprot.WriteListBegin(ctx, thrift.STRING, len(p.FilterWords)); err != nil {
+      return thrift.PrependError("error writing list begin: ", err)
+    }
+    for _, v := range p.FilterWords {
+      if err := oprot.WriteString(ctx, string(v)); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T. (0) field write error: ", p), err) }
+    }
+    if err := oprot.WriteListEnd(ctx); err != nil {
+      return thrift.PrependError("error writing list end: ", err)
+    }
+    if err := oprot.WriteFieldEnd(ctx); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 9:filter_words: ", p), err) }
+  }
+  return err
+}
+
+func (p *SearchRequest) writeField10(ctx context.Context, oprot thrift.TProtocol) (err error) {
+  if p.IsSetFilterWordsOr() {
+    if err := oprot.WriteFieldBegin(ctx, "filter_words_or", thrift.BOOL, 10); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field begin error 10:filter_words_or: ", p), err) }
+    if err := oprot.WriteBool(ctx, bool(*p.FilterWordsOr)); err != nil {
+    return thrift.PrependError(fmt.Sprintf("%T.filter_words_or (10) field write error: ", p), err) }
+    if err := oprot.WriteFieldEnd(ctx); err != nil {
+      return thrift.PrependError(fmt.Sprintf("%T write field end error 10:filter_words_or: ", p), err) }
+  }
+  return err
+}
+
 func (p *SearchRequest) writeField255(ctx context.Context, oprot thrift.TProtocol) (err error) {
   if err := oprot.WriteFieldBegin(ctx, "baseData", thrift.STRUCT, 255); err != nil {
     return thrift.PrependError(fmt.Sprintf("%T write field begin error 255:baseData: ", p), err) }
@@ -515,13 +669,30 @@ func (p *SearchRequest) Equals(other *SearchRequest) bool {
   }
   if len(p.LogLevels) != len(other.LogLevels) { return false }
   for i, _tgt := range p.LogLevels {
-    _src2 := other.LogLevels[i]
-    if _tgt != _src2 { return false }
+    _src3 := other.LogLevels[i]
+    if _tgt != _src3 { return false }
   }
   if len(p.KeyWords) != len(other.KeyWords) { return false }
   for i, _tgt := range p.KeyWords {
-    _src3 := other.KeyWords[i]
-    if _tgt != _src3 { return false }
+    _src4 := other.KeyWords[i]
+    if _tgt != _src4 { return false }
+  }
+  if p.KeyWordsOr != other.KeyWordsOr {
+    if p.KeyWordsOr == nil || other.KeyWordsOr == nil {
+      return false
+    }
+    if (*p.KeyWordsOr) != (*other.KeyWordsOr) { return false }
+  }
+  if len(p.FilterWords) != len(other.FilterWords) { return false }
+  for i, _tgt := range p.FilterWords {
+    _src5 := other.FilterWords[i]
+    if _tgt != _src5 { return false }
+  }
+  if p.FilterWordsOr != other.FilterWordsOr {
+    if p.FilterWordsOr == nil || other.FilterWordsOr == nil {
+      return false
+    }
+    if (*p.FilterWordsOr) != (*other.FilterWordsOr) { return false }
   }
   if !p.BaseData.Equals(other.BaseData) { return false }
   return true
@@ -661,26 +832,26 @@ func (p *SearchResponse)  ReadField2(ctx context.Context, iprot thrift.TProtocol
       return thrift.PrependError("error reading map begin: ", err)
     }
     tMap := make(map[string]string, size)
-    _elem4 :=  tMap
+    _elem6 :=  tMap
     for i := 0; i < size; i ++ {
-var _key5 string
+var _key7 string
       if v, err := iprot.ReadString(ctx); err != nil {
       return thrift.PrependError("error reading field 0: ", err)
 } else {
-      _key5 = v
+      _key7 = v
 }
-var _val6 string
+var _val8 string
       if v, err := iprot.ReadString(ctx); err != nil {
       return thrift.PrependError("error reading field 0: ", err)
 } else {
-      _val6 = v
+      _val8 = v
 }
-      _elem4[_key5] = _val6
+      _elem6[_key7] = _val8
     }
     if err := iprot.ReadMapEnd(ctx); err != nil {
       return thrift.PrependError("error reading map end: ", err)
     }
-    p.Hits = append(p.Hits, _elem4)
+    p.Hits = append(p.Hits, _elem6)
   }
   if err := iprot.ReadListEnd(ctx); err != nil {
     return thrift.PrependError("error reading list end: ", err)
@@ -769,11 +940,11 @@ func (p *SearchResponse) Equals(other *SearchResponse) bool {
   if p.Total != other.Total { return false }
   if len(p.Hits) != len(other.Hits) { return false }
   for i, _tgt := range p.Hits {
-    _src7 := other.Hits[i]
-    if len(_tgt) != len(_src7) { return false }
+    _src9 := other.Hits[i]
+    if len(_tgt) != len(_src9) { return false }
     for k, _tgt := range _tgt {
-      _src8 := _src7[k]
-      if _tgt != _src8 { return false }
+      _src10 := _src9[k]
+      if _tgt != _src10 { return false }
     }
   }
   if !p.BaseData.Equals(other.BaseData) { return false }
@@ -834,17 +1005,17 @@ func (p *LogServiceClient) SetLastResponseMeta_(meta thrift.ResponseMeta) {
 // Parameters:
 //  - Req
 func (p *LogServiceClient) Search(ctx context.Context, req *SearchRequest) (_r *SearchResponse, _err error) {
-  var _args9 LogServiceSearchArgs
-  _args9.Req = req
-  var _result11 LogServiceSearchResult
-  var _meta10 thrift.ResponseMeta
-  _meta10, _err = p.Client_().Call(ctx, "Search", &_args9, &_result11)
-  p.SetLastResponseMeta_(_meta10)
+  var _args11 LogServiceSearchArgs
+  _args11.Req = req
+  var _result13 LogServiceSearchResult
+  var _meta12 thrift.ResponseMeta
+  _meta12, _err = p.Client_().Call(ctx, "Search", &_args11, &_result13)
+  p.SetLastResponseMeta_(_meta12)
   if _err != nil {
     return
   }
-  if _ret12 := _result11.GetSuccess(); _ret12 != nil {
-    return _ret12, nil
+  if _ret14 := _result13.GetSuccess(); _ret14 != nil {
+    return _ret14, nil
   }
   return nil, thrift.NewTApplicationException(thrift.MISSING_RESULT, "Search failed: unknown result")
 }
@@ -869,9 +1040,9 @@ func (p *LogServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFunctio
 
 func NewLogServiceProcessor(handler LogService) *LogServiceProcessor {
 
-  self13 := &LogServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
-  self13.processorMap["Search"] = &logServiceProcessorSearch{handler:handler}
-return self13
+  self15 := &LogServiceProcessor{handler:handler, processorMap:make(map[string]thrift.TProcessorFunction)}
+  self15.processorMap["Search"] = &logServiceProcessorSearch{handler:handler}
+return self15
 }
 
 func (p *LogServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -882,12 +1053,12 @@ func (p *LogServiceProcessor) Process(ctx context.Context, iprot, oprot thrift.T
   }
   iprot.Skip(ctx, thrift.STRUCT)
   iprot.ReadMessageEnd(ctx)
-  x14 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
+  x16 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function " + name)
   oprot.WriteMessageBegin(ctx, name, thrift.EXCEPTION, seqId)
-  x14.Write(ctx, oprot)
+  x16.Write(ctx, oprot)
   oprot.WriteMessageEnd(ctx)
   oprot.Flush(ctx)
-  return false, x14
+  return false, x16
 
 }
 
@@ -896,7 +1067,7 @@ type logServiceProcessorSearch struct {
 }
 
 func (p *logServiceProcessorSearch) Process(ctx context.Context, seqId int32, iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
-  var _write_err15 error
+  var _write_err17 error
   args := LogServiceSearchArgs{}
   if err2 := args.Read(ctx, iprot); err2 != nil {
     iprot.ReadMessageEnd(ctx)
@@ -942,21 +1113,21 @@ func (p *logServiceProcessorSearch) Process(ctx context.Context, seqId int32, ip
     if errors.Is(err2, thrift.ErrAbandonRequest) {
       return false, thrift.WrapTException(err2)
     }
-    _exc16 := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Search: " + err2.Error())
+    _exc18 := thrift.NewTApplicationException(thrift.INTERNAL_ERROR, "Internal error processing Search: " + err2.Error())
     if err2 := oprot.WriteMessageBegin(ctx, "Search", thrift.EXCEPTION, seqId); err2 != nil {
-      _write_err15 = thrift.WrapTException(err2)
+      _write_err17 = thrift.WrapTException(err2)
     }
-    if err2 := _exc16.Write(ctx, oprot); _write_err15 == nil && err2 != nil {
-      _write_err15 = thrift.WrapTException(err2)
+    if err2 := _exc18.Write(ctx, oprot); _write_err17 == nil && err2 != nil {
+      _write_err17 = thrift.WrapTException(err2)
     }
-    if err2 := oprot.WriteMessageEnd(ctx); _write_err15 == nil && err2 != nil {
-      _write_err15 = thrift.WrapTException(err2)
+    if err2 := oprot.WriteMessageEnd(ctx); _write_err17 == nil && err2 != nil {
+      _write_err17 = thrift.WrapTException(err2)
     }
-    if err2 := oprot.Flush(ctx); _write_err15 == nil && err2 != nil {
-      _write_err15 = thrift.WrapTException(err2)
+    if err2 := oprot.Flush(ctx); _write_err17 == nil && err2 != nil {
+      _write_err17 = thrift.WrapTException(err2)
     }
-    if _write_err15 != nil {
-      return false, thrift.WrapTException(_write_err15)
+    if _write_err17 != nil {
+      return false, thrift.WrapTException(_write_err17)
     }
     return true, err
   } else {
@@ -964,19 +1135,19 @@ func (p *logServiceProcessorSearch) Process(ctx context.Context, seqId int32, ip
   }
   tickerCancel()
   if err2 := oprot.WriteMessageBegin(ctx, "Search", thrift.REPLY, seqId); err2 != nil {
-    _write_err15 = thrift.WrapTException(err2)
+    _write_err17 = thrift.WrapTException(err2)
   }
-  if err2 := result.Write(ctx, oprot); _write_err15 == nil && err2 != nil {
-    _write_err15 = thrift.WrapTException(err2)
+  if err2 := result.Write(ctx, oprot); _write_err17 == nil && err2 != nil {
+    _write_err17 = thrift.WrapTException(err2)
   }
-  if err2 := oprot.WriteMessageEnd(ctx); _write_err15 == nil && err2 != nil {
-    _write_err15 = thrift.WrapTException(err2)
+  if err2 := oprot.WriteMessageEnd(ctx); _write_err17 == nil && err2 != nil {
+    _write_err17 = thrift.WrapTException(err2)
   }
-  if err2 := oprot.Flush(ctx); _write_err15 == nil && err2 != nil {
-    _write_err15 = thrift.WrapTException(err2)
+  if err2 := oprot.Flush(ctx); _write_err17 == nil && err2 != nil {
+    _write_err17 = thrift.WrapTException(err2)
   }
-  if _write_err15 != nil {
-    return false, thrift.WrapTException(_write_err15)
+  if _write_err17 != nil {
+    return false, thrift.WrapTException(_write_err17)
   }
   return true, err
 }

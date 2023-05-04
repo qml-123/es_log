@@ -152,19 +152,19 @@ func main() {
       fmt.Fprintln(os.Stderr, "Search requires 1 args")
       flag.Usage()
     }
-    arg17 := flag.Arg(1)
-    mbTrans18 := thrift.NewTMemoryBufferLen(len(arg17))
-    defer mbTrans18.Close()
-    _, err19 := mbTrans18.WriteString(arg17)
-    if err19 != nil {
+    arg19 := flag.Arg(1)
+    mbTrans20 := thrift.NewTMemoryBufferLen(len(arg19))
+    defer mbTrans20.Close()
+    _, err21 := mbTrans20.WriteString(arg19)
+    if err21 != nil {
       Usage()
       return
     }
-    factory20 := thrift.NewTJSONProtocolFactory()
-    jsProt21 := factory20.GetProtocol(mbTrans18)
+    factory22 := thrift.NewTJSONProtocolFactory()
+    jsProt23 := factory22.GetProtocol(mbTrans20)
     argvalue0 := es_log.NewSearchRequest()
-    err22 := argvalue0.Read(context.Background(), jsProt21)
-    if err22 != nil {
+    err24 := argvalue0.Read(context.Background(), jsProt23)
+    if err24 != nil {
       Usage()
       return
     }
