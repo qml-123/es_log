@@ -13,8 +13,8 @@ import (
 	"strconv"
 	"strings"
 	thrift "github.com/apache/thrift/lib/go/thrift"
-	"base"
-	"es_log"
+	"github.com/qml-123/es_log/gen-go/base"
+    "github.com/qml-123/es_log/gen-go/es_log"
 )
 
 var _ = base.GoUnusedProtection__

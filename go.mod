@@ -1,4 +1,4 @@
-module es-log
+module github.com/qml-123/es_log
 
 go 1.19
 

@@ -3,7 +3,7 @@ package model
 import (
 	"context"
 
-	"es_log/gen-go/es_log"
+	"github.com/qml-123/es_log/gen-go/es_log"
 )
 
 type LogModel struct{}

@@ -11,7 +11,7 @@ import (
 	thrift "github.com/apache/thrift/lib/go/thrift"
 	"strings"
 	"regexp"
-	"base"
+	"github.com/qml-123/es_log/gen-go/base"
 
 )
 

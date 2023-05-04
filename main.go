@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 
-	"es_log/gen-go/es_log"
-	"es_log/handler"
+	"github.com/qml-123/es_log/gen-go/es_log"
+	"github.com/qml-123/es_log/handler"
 
 	"github.com/apache/thrift/lib/go/thrift"
 )

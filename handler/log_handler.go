@@ -3,8 +3,8 @@ package handler
 import (
 	"context"
 
-	"es_log/controller"
-	"es_log/gen-go/es_log"
+	"github.com/qml-123/es_log/controller"
+	"github.com/qml-123/es_log/gen-go/es_log"
 )
 
 type LogHandler struct{}
