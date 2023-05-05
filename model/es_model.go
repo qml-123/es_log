@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 )
 
 type LogModel struct{}
@@ -13,14 +14,14 @@ func NewLogModel() *LogModel {
 	return &LogModel{}
 }
 
-func (m *LogModel) Search(ctx context.Context, index string, queryBuilder *QueryBuilder) (int64, map[string]interface{}, error) {
+func (m *LogModel) Search(ctx context.Context, index string, queryBuilder *QueryBuilder) (int64, []map[string]string, error) {
 	var buf bytes.Buffer
 	searchBody := map[string]interface{}{}
 
 	boolQuery := map[string]interface{}{}
 
 	if len(queryBuilder.Must) > 0 {
-		must := []map[string]interface{}{}
+		must := make([]map[string]interface{}, 0)
 		for field, values := range queryBuilder.Must {
 			must = append(must, map[string]interface{}{
 				"terms": map[string]interface{}{
@@ -32,7 +33,7 @@ func (m *LogModel) Search(ctx context.Context, index string, queryBuilder *Query
 	}
 
 	if len(queryBuilder.MustNot) > 0 {
-		mustNot := []map[string]interface{}{}
+		mustNot := make([]map[string]interface{}, 0)
 		for field, values := range queryBuilder.MustNot {
 			mustNot = append(mustNot, map[string]interface{}{
 				"terms": map[string]interface{}{
@@ -90,13 +91,12 @@ func (m *LogModel) Search(ctx context.Context, index string, queryBuilder *Query
 		return 0, nil, fmt.Errorf("error encoding search body: %w", err)
 	}
 
-
 	resp, err := esClient.Search(
 		esClient.Search.WithContext(ctx),
 		esClient.Search.WithBody(&buf),
 		esClient.Search.WithIndex(index),
 		esClient.Search.WithTrackTotalHits(true),
-		esClient.Search.WithFrom(int((queryBuilder.PageNum - 1) * queryBuilder.PageSize)),
+		esClient.Search.WithFrom(int((queryBuilder.PageNum-1)*queryBuilder.PageSize)),
 		esClient.Search.WithSize(int(queryBuilder.PageSize)),
 	)
 
@@ -110,5 +110,20 @@ func (m *LogModel) Search(ctx context.Context, index string, queryBuilder *Query
 		return 0, nil, fmt.Errorf("error decoding search response: %w", err)
 	}
 	totalHits := int64(esResp["hits"].(map[string]interface{})["total"].(map[string]interface{})["value"].(float64))
-	return totalHits, esResp, nil
+
+	hits, ok := esResp["hits"].(map[string]interface{})["hits"].([]interface{})
+	if !ok {
+		log.Fatalf("Error parsing hits, esResp: %v", esResp)
+		return 0, nil, fmt.Errorf("Error parsing hits")
+	}
+
+	results := make([]map[string]string, 0)
+	for _, hit := range hits {
+		result, ok := hit.(map[string]interface{})["_source"].(map[string]string)
+		if !ok {
+			log.Fatalf("Error parsing hit")
+		}
+		results = append(results, result)
+	}
+	return totalHits, results, nil
 }

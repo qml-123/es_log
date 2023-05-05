@@ -3,7 +3,7 @@ package controller
 import (
 	"context"
 
-	"github.com/qml-123/es_log/gen-go/es_log"
+	"github.com/qml-123/es_log/kitex_gen/es_log"
 	"github.com/qml-123/es_log/model"
 )
 
@@ -24,7 +24,7 @@ func (c *LogController) Search(ctx context.Context, req *es_log.SearchRequest) (
 	logModel := model.NewLogModel()
 
 	searchBody := &model.QueryBuilder{
-		PageNum: req.GetPage(),
+		PageNum:  req.GetPage(),
 		PageSize: req.GetPageSize(),
 		Must:     make(map[string][]string),
 		MustNot:  make(map[string][]string),
@@ -60,12 +60,12 @@ func (c *LogController) Search(ctx context.Context, req *es_log.SearchRequest) (
 		searchBody.ShouldOr = req.GetKeyWordsOr()
 	}
 
-	total, searchResp, err := logModel.Search(ctx, "log_index", searchBody)
+	total, resp, err := logModel.Search(ctx, "log_index", searchBody)
 	if err != nil {
 		return nil, err
 	}
 	return &es_log.SearchResponse{
 		Total: total,
-		Hits: searchResp["hits"].([]map[string]string),
+		Hits:  resp,
 	}, nil
 }
