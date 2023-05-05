@@ -7,6 +7,9 @@
           <mappings>
             <mapping deploy="/root/go/src/github.com/qml-123/es_log" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath path="/root/go/src/github.com/qml-123/es_log/es_log" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>
