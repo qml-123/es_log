@@ -1,4 +1,4 @@
-package model
+package es
 
 import (
 	"crypto/tls"
@@ -13,7 +13,7 @@ var esClient *elasticsearch.Client
 
 func init() {
 	var err error
-	caBundle, err := ioutil.ReadFile("/home/elasticsearch/elasticsearch-8.7.0/config/certs/http_ca.crt")
+	caBundle, err := ioutil.ReadFile("http_ca.crt")
 	if err != nil {
 		panic(err)
 	}

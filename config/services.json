@@ -1,0 +1,6 @@
+{
+  "service_name": "LogService",
+  "listen_port": 5000,
+  "listen_ip": "114.116.15.130",
+  "consul_address": "114.116.15.130:8500"
+}

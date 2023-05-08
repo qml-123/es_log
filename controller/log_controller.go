@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/qml-123/es_log/kitex_gen/es_log"
-	"github.com/qml-123/es_log/model"
+	"github.com/qml-123/es_log/pkg/es"
 )
 
 type LogController struct{}
@@ -21,9 +21,9 @@ func getSort(acs bool) string {
 }
 
 func (c *LogController) Search(ctx context.Context, req *es_log.SearchRequest) (*es_log.SearchResponse, error) {
-	logModel := model.NewLogModel()
+	logModel := es.NewLogModel()
 
-	searchBody := &model.QueryBuilder{
+	searchBody := &es.QueryBuilder{
 		PageNum:  req.GetPage(),
 		PageSize: req.GetPageSize(),
 		Must:     make(map[string][]string),
