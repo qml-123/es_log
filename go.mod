@@ -7,6 +7,7 @@ require (
 	github.com/cloudwego/kitex v0.5.2
 	github.com/elastic/go-elasticsearch/v8 v8.7.1
 	github.com/qml-123/GateWay v0.0.0-20230508142341-e83acd6c4f79
+	github.com/sirupsen/logrus v1.9.0
 )
 
 require (
