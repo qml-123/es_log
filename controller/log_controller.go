@@ -3,7 +3,7 @@ package controller
 import (
 	"context"
 
-	"github.com/qml-123/es_log/kitex_gen/es_log"
+	"github.com/qml-123/app_log/kitex_gen/es_log"
 	"github.com/qml-123/es_log/pkg/es"
 )
 

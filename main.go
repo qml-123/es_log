@@ -7,7 +7,7 @@ import (
 
 	"github.com/cloudwego/kitex/server"
 	"github.com/qml-123/app_log/common"
-	es_log "github.com/qml-123/es_log/kitex_gen/es_log/logservice"
+	"github.com/qml-123/app_log/kitex_gen/es_log/logservice"
 )
 
 const (
@@ -24,7 +24,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	svr := es_log.NewServer(new(LogServiceImpl), server.WithServiceAddr(addr))
+	svr := logservice.NewServer(new(LogServiceImpl), server.WithServiceAddr(addr))
 
 	addr, _ = net.ResolveTCPAddr("tcp", conf.ListenIp+":"+fmt.Sprintf("%d", conf.ListenPort))
 	if err = common.InitConsul(addr, conf); err != nil {

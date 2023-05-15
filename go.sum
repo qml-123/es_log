@@ -223,8 +223,8 @@ github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZN
 github.com/posener/complete v1.1.1/go.mod h1:em0nMJCgc9GFtwrmVmEMR/ZL6WyhyjMBndrE9hABlRI=
 github.com/posener/complete v1.2.3/go.mod h1:WZIdtGGp+qx0sLrYKtIRAruyNpv6hFCicSgv7Sy7s/s=
 github.com/prometheus/client_model v0.0.0-20190812154241-14fe0d1b01d4/go.mod h1:xMI15A0UPsDsEKsMN9yxemIoYk6Tm2C1GtYGdfGttqA=
-github.com/qml-123/app_log v0.0.0-20230515082432-a65bd0d33f11 h1:XT1FJnECYlCThZ0Q2P4vF0ABlAl0HEdyFmBGXNUbY5g=
-github.com/qml-123/app_log v0.0.0-20230515082432-a65bd0d33f11/go.mod h1:iZrwoPnoLIbxxb9cUk+s8Hc0HBR2SQxPGBGDS9WSf7A=
+github.com/qml-123/app_log v1.1.19 h1:5RBqV/eOHZdeqnQdciMkmlO/EPCO8KzO7NfAa80DxeU=
+github.com/qml-123/app_log v1.1.19/go.mod h1:fhrnCQn/K6MTjkSKeyP3JUbkop0gvbXXymVt3ip5yLA=
 github.com/qml-123/log_sdk v0.0.0-20230512091914-2559cdff3407 h1:6bDd4kiKWl14F4PERMbLzci9LPGG8/CeJkZ9VcJr8u4=
 github.com/qml-123/log_sdk v0.0.0-20230512091914-2559cdff3407/go.mod h1:oPocEbOM67Kaze8wYf/Q8WqepCC1l6s6jn8Xb4RUAg8=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=

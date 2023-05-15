@@ -37,7 +37,7 @@ func init() {
 	}
 
 	esClient, err = elasticsearch.NewClient(elasticsearch.Config{
-		Addresses: []string{"https://localhost:9200"},
+		Addresses: []string{"http://localhost:9200"},
 		Username:  "elastic",
 		Password:  "FOWrYfQbfnRa1_WMepPk",
 		Transport: transport,

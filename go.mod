@@ -3,14 +3,14 @@ module github.com/qml-123/es_log
 go 1.18
 
 require (
-	github.com/apache/thrift v0.18.1
 	github.com/cloudwego/kitex v0.5.2
 	github.com/elastic/go-elasticsearch/v8 v8.7.1
-	github.com/qml-123/app_log v0.0.0-20230515082432-a65bd0d33f11
+	github.com/qml-123/app_log v1.1.19
 	github.com/qml-123/log_sdk v0.0.0-20230512091914-2559cdff3407
 )
 
 require (
+	github.com/apache/thrift v0.18.1 // indirect
 	github.com/armon/go-metrics v0.0.0-20180917152333-f0300d1749da // indirect
 	github.com/bytedance/gopkg v0.0.0-20220817015305-b879a72dc90f // indirect
 	github.com/chenzhuoyu/iasm v0.0.0-20230222070914-0b1b64b0e762 // indirect

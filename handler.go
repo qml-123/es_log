@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
+	"github.com/qml-123/app_log/kitex_gen/es_log"
 	"github.com/qml-123/es_log/controller"
-	es_log "github.com/qml-123/es_log/kitex_gen/es_log"
 )
 
 // LogServiceImpl implements the last service interface defined in the IDL.
