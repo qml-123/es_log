@@ -6,7 +6,7 @@ import (
 	"net"
 
 	"github.com/cloudwego/kitex/server"
-	"github.com/qml-123/GateWay/common"
+	"github.com/qml-123/app_log/common"
 	es_log "github.com/qml-123/es_log/kitex_gen/es_log/logservice"
 )
 
@@ -19,6 +19,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
 	addr, err := net.ResolveTCPAddr("tcp", "0.0.0.0:"+fmt.Sprintf("%d", conf.ListenPort))
 	if err != nil {
 		panic(err)
